@@ -1,0 +1,6 @@
+[{"Tag":"Test1","Name":"Player","Talk":"안녕하세요. Test1님 계신가요?"},
+{"Tag":"Test1","Name":"Test1","Talk":"네 안녕하세요 어떤일로 오셧나요?"},
+{"Tag":"Test1","Name":"Player","Talk":"Null입니다"},
+{"Tag":"Test2","Name":"Player","Talk":"안녕하세요 Test2님 계신가요?"},
+{"Tag":"Test2","Name":"Test2","Talk":"네 안녕하세요 어떤일로 오셧나요?"},
+{"Tag":"Test2","Name":"Player","Talk":"Null입니다"}]
