@@ -31,7 +31,7 @@ public class TalkDatas : ScriptableObject
         if (file != null)
         {
             string json = JsonUtility.ToJson(file);
-            return JsonUtility.FromJson<List<TalkData>>(json);
+            return JsonUtility.FromJson<List<TalkData>>(file.ToString());
         }
 
         return null;

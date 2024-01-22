@@ -6,6 +6,8 @@ public class UserNameTagUI : UIController
     public TextMeshProUGUI textPro;
     private PlayerData playerData;
     [SerializeField] private string Name;
+
+    private TalkManager tm;
      protected override void Awake()
     {
         base.Awake();

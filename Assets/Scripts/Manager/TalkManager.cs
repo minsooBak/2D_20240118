@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine.UI;
 
 public class TalkManager : MonoBehaviour
 {
@@ -11,15 +11,18 @@ public class TalkManager : MonoBehaviour
 
     [SerializeField] private GameObject obj;
     [SerializeField] private TalkDatas talkDatas;
-    [SerializeField] private TextMeshProUGUI textName;
     [SerializeField] private TextMeshProUGUI textMain;
+    public List<Sprite> currentImg;
+    public Image img;
 
     private List<TalkData> current;
     private CharacterController player;
+    private SpriteRenderer playerImg;
 
     [SerializeField]private float delay = 0.15f;
     [SerializeField] private int page = 0;
     bool isTalk = false;
+
     private void Awake()
     {
         if(_instance == null)
@@ -29,21 +32,27 @@ public class TalkManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
         talkDatas.Init();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterController>();
+        var p = GameObject.FindGameObjectWithTag("Player");
+        player = p.GetComponent<CharacterController>();
+        playerImg = p.GetComponent<SpriteRenderer>();
     }
 
     public void OnTalk(string name)
     {
-        talkDatas.talks.TryGetValue(name.GetHashCode(), out current);
+        if (current.Count == 0)
+        {
+            talkDatas.talks.TryGetValue(name.GetHashCode(), out current);
+            page = 0;
+        }
         IsActive(true);
         player.SetMove(false);
 
-        textName.text = current[page].Name;
+        if (current[page].name == "Player")
+            img.sprite = playerImg.sprite;
         while(page >= current.Count && isTalk == false)
         { 
             StartCoroutine("Talk", current[page]);
         }
-        page = 0;
     }
 
     IEnumerable Talk(string talk)
@@ -59,7 +68,7 @@ public class TalkManager : MonoBehaviour
         yield return null;
     }
 
-    public void OnJump()
+    public void NextPage()
     {
         if(isTalk != false && current.Count > 0)
         {

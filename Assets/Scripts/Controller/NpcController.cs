@@ -7,9 +7,10 @@ public class NpcController : CharacterController
     [SerializeField] private string Name;
     protected bool isEnter = false;
     [SerializeField] private CharacterController _controller;
+    private TalkManager _TM;
     private void Awake()
-
     {
+        _TM = TalkManager.Instance;
         _controller = GetComponent<CharacterController>();
     }
 
@@ -20,6 +21,8 @@ public class NpcController : CharacterController
 
     private void Jump()
     {
+        if (isEnter)
+            _TM.OnTalk(Name);
         CallJumpEvent();
     }
 
