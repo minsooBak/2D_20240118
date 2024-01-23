@@ -5,18 +5,20 @@ public class NpcController : CharacterController
 {
     [SerializeField] private LayerMask target;
     [SerializeField] private string Name;
-    protected bool isEnter = false;
+    [SerializeField] protected bool isEnter = false;
     [SerializeField] private CharacterController _controller;
     private TalkManager _TM;
+
     private void Awake()
     {
-        _TM = TalkManager.Instance;
-        _controller = GetComponent<CharacterController>();
+        //_controller = GetComponent<CharacterController>();
     }
 
     private void Start()
     {
+        _TM = TalkManager.Instance;
         _controller.JumpEvent += Jump;
+        //JumpEvent += Jump;
     }
 
     private void Jump()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using static TalkDatas;
 
 public class TalkManager : MonoBehaviour
 {
@@ -14,13 +15,11 @@ public class TalkManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI textMain;
     public List<Sprite> currentImg;
     public Image img;
-
-    private List<TalkData> current;
     private CharacterController player;
     private SpriteRenderer playerImg;
 
     [SerializeField]private float delay = 0.15f;
-    [SerializeField] private int page = 0;
+    [SerializeField]private int page = 0;
     bool isTalk = false;
 
     private void Awake()
@@ -34,28 +33,42 @@ public class TalkManager : MonoBehaviour
         talkDatas.Init();
         var p = GameObject.FindGameObjectWithTag("Player");
         player = p.GetComponent<CharacterController>();
-        playerImg = p.GetComponent<SpriteRenderer>();
+        playerImg = p.GetComponentInChildren<SpriteRenderer>();
     }
 
     public void OnTalk(string name)
     {
-        if (current.Count == 0)
+        if (isTalk)
+            return;
+        
+        var a = talkDatas.talks[name.GetHashCode()];
+
+        if (a.Count == page)
         {
-            talkDatas.talks.TryGetValue(name.GetHashCode(), out current);
+            IsActive(false);
+            player.SetMove(true);
             page = 0;
+            textMain.text = "";
+            return;
         }
         IsActive(true);
         player.SetMove(false);
-
-        if (current[page].name == "Player")
+       
+        if (a[page].Name == "Player")
             img.sprite = playerImg.sprite;
-        while(page >= current.Count && isTalk == false)
-        { 
-            StartCoroutine("Talk", current[page]);
+        else if (a[page].Name == "Test1")
+            img.sprite = currentImg[0];
+        else
+            img.sprite = currentImg[1];
+
+        if(page <= a.Count - 1 && isTalk == false)
+        {
+            textMain.text = "";
+            StartCoroutine(Talk(a[page++].Talk));
         }
     }
 
-    IEnumerable Talk(string talk)
+    IEnumerator Talk(string talk)
     {
         isTalk = true;
         foreach (char text in talk)
@@ -66,14 +79,6 @@ public class TalkManager : MonoBehaviour
         isTalk = false;
         StopCoroutine("Talk");
         yield return null;
-    }
-
-    public void NextPage()
-    {
-        if(isTalk != false && current.Count > 0)
-        {
-            StartCoroutine("Talk", current[++page]);
-        }
     }
 
     void IsActive(bool isActive)

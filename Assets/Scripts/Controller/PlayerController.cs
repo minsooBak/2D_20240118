@@ -4,10 +4,16 @@ using UnityEngine.InputSystem;
 public class PlayerController : CharacterController
 {
     private Camera _camera;
+    private TalkManager _TM;
 
     private void Awake()
     {
         _camera = Camera.main;
+    }
+
+    private void Start()
+    {
+        _TM = TalkManager.Instance;
     }
 
     public void OnMove(InputValue data)

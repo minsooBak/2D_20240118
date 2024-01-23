@@ -4,14 +4,12 @@ using UnityEngine;
 public class UserNameTagUI : UIController
 {
     public TextMeshProUGUI textPro;
-    private PlayerData playerData;
-    [SerializeField] private string Name;
-
-    private TalkManager tm;
+    public string Name = "";
      protected override void Awake()
     {
         base.Awake();
-        playerData = GetComponent<PlayerData>();
+        if (Name != "")
+            ChangName(Name);
     }
 
     public void Disable()

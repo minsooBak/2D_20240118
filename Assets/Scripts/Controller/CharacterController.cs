@@ -8,7 +8,7 @@ public class CharacterController : MonoBehaviour
     public event Action JumpEvent;
 
     [SerializeField]
-    private bool canMove = true;
+    protected bool canMove = true;
 
     public void SetMove(bool move) => canMove = move;
 
@@ -16,6 +16,8 @@ public class CharacterController : MonoBehaviour
     {
         if (canMove)
             MoveEvent?.Invoke(data);
+        else
+            MoveEvent?.Invoke(Vector2.zero);
     }
 
     public void CallLookEvent(Vector2 data)
@@ -26,7 +28,7 @@ public class CharacterController : MonoBehaviour
 
     public void CallJumpEvent()
     {
-        if (canMove)
-            JumpEvent?.Invoke();
+        //if (canMove)
+        JumpEvent?.Invoke();
     }
 }

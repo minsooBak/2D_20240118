@@ -1,16 +1,23 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Newtonsoft.Json;
 
 [CreateAssetMenu]
 public class TalkDatas : ScriptableObject
 {
-    private readonly List<TalkData> talkDatas = Load();
-    public Dictionary<int, List<TalkData>> talks;
-    public List<string> names = new List<string>();
+    public struct sTalk
+    {
+        public string Tag;
+        public string Name;
+        public string Talk;
+    }
+    public Dictionary<int, List<sTalk>> talks = new();
+    public List<string> names = new();
 
     public void Init()
     {
+        List<sTalk> talkDatas = Load();
         foreach (var name in names) 
         {
             var list = talkDatas.FindAll(x => x.Tag == name);
@@ -18,7 +25,7 @@ public class TalkDatas : ScriptableObject
         }
     }
 
-    static List<TalkData> Load()
+    List<sTalk> Load()
     {
         string path = Application.dataPath + @"\Data\TalkData.json";
 
@@ -27,13 +34,8 @@ public class TalkDatas : ScriptableObject
             Debug.Log("talkData Load Faill");
             return null;
         }
-        StreamReader file = File.OpenText(path);
-        if (file != null)
-        {
-            string json = JsonUtility.ToJson(file);
-            return JsonUtility.FromJson<List<TalkData>>(file.ToString());
-        }
-
-        return null;
+        string json = File.ReadAllText(path);
+        //var data = CreateInstance("TalkData");
+        return JsonConvert.DeserializeObject<List<sTalk>>(json);
     }
 }

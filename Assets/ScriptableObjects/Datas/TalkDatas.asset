@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a3584d75d535b14999c13dd6a1e3cbb, type: 3}
   m_Name: TalkDatas
   m_EditorClassIdentifier: 
-  names: []
+  names:
+  - Test1
+  - Test2
