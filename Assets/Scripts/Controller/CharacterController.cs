@@ -28,7 +28,7 @@ public class CharacterController : MonoBehaviour
 
     public void CallJumpEvent()
     {
-        //if (canMove)
+        if (canMove)
         JumpEvent?.Invoke();
     }
 }

@@ -22,4 +22,9 @@ public class UIController : MonoBehaviour
         _controller.SetMove(true);
         obj.SetActive(false);
     }
+
+    protected void MoveActive()
+    {
+        obj.SetActive(true);
+    }
 }

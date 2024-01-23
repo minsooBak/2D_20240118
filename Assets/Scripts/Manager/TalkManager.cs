@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using static TalkDatas;
 
 public class TalkManager : MonoBehaviour
 {
@@ -17,6 +16,7 @@ public class TalkManager : MonoBehaviour
     public Image img;
     private CharacterController player;
     private SpriteRenderer playerImg;
+    private string targetName = "";
 
     [SerializeField]private float delay = 0.15f;
     [SerializeField]private int page = 0;
@@ -36,18 +36,19 @@ public class TalkManager : MonoBehaviour
         playerImg = p.GetComponentInChildren<SpriteRenderer>();
     }
 
-    public void OnTalk(string name)
+    public void OnTalk(string name = "")
     {
-        if (isTalk)
+        if (isTalk || (targetName == "" && name == ""))
             return;
-        
-        var a = talkDatas.talks[name.GetHashCode()];
+        targetName = name == "" ? targetName : name;
+        var a = talkDatas.talks[targetName.GetHashCode()];
 
         if (a.Count == page)
         {
             IsActive(false);
             player.SetMove(true);
             page = 0;
+            targetName = "";
             textMain.text = "";
             return;
         }

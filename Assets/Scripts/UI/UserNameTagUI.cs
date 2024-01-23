@@ -1,5 +1,4 @@
 using TMPro;
-using UnityEngine;
 
 public class UserNameTagUI : UIController
 {
@@ -9,7 +8,10 @@ public class UserNameTagUI : UIController
     {
         base.Awake();
         if (Name != "")
+        { 
             ChangName(Name);
+            //Active();
+        }
     }
 
     public void Disable()

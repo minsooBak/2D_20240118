@@ -35,7 +35,6 @@ public class TalkDatas : ScriptableObject
             return null;
         }
         string json = File.ReadAllText(path);
-        //var data = CreateInstance("TalkData");
         return JsonConvert.DeserializeObject<List<sTalk>>(json);
     }
 }

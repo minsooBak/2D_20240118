@@ -7,7 +7,7 @@ public class PlayerTime : MonoBehaviour
 
     private void Awake()
     {
-        text = GetComponent<TextMeshProUGUI>();
+        text = GetComponentInChildren<TextMeshProUGUI>();
     }
 
     // Update is called once per frame
